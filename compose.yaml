@@ -1,0 +1,15 @@
+services:
+  reports-db:
+    image: postgres:16.4
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_PASSWORD=34423b2d-1d7d-4cf1-992f-51b54e8f3783
+      - POSTGRES_USER=marlon
+      - POSTGRES_DB=reports
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+volumes:
+  db-data:
