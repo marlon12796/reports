@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { DrizzleModule } from './drizzle/drizzle.module';
 import { BasicReportsModule } from './basic-reports/basic-reports.module';
 import { ConfigModule } from '@nestjs/config';
+import { PrinterModule } from './printer/printer.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
       expandVariables: true,
       isGlobal: true,
     }),
+    PrinterModule,
   ],
   controllers: [],
   providers: [],

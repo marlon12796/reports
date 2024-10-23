@@ -47,6 +47,7 @@ lerna-debug.log*
 .tmp
 .vscode
 # Runtime data
+/pdf
 pids
 *.pid
 *.seed
