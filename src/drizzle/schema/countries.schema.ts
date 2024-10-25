@@ -1,3 +1,4 @@
+import { InferModel, InferSelectModel } from 'drizzle-orm';
 import { integer, pgTable, varchar, text, smallint } from 'drizzle-orm/pg-core';
 import { pgEnum } from 'drizzle-orm/pg-core';
 
@@ -18,3 +19,4 @@ export const Countries = pgTable('countries', {
 	currency: varchar('currency', { length: 3 }),
 	continent: continentEnum('continent'),
 });
+export type Country = InferSelectModel<typeof Countries>;

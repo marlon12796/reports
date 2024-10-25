@@ -4,7 +4,7 @@ import { DrizzleDB } from 'src/drizzle/types/types';
 import pdfPrinter from 'pdfmake';
 import { PrinterService } from 'src/printer/printer.service';
 import { getHelloWorldReport, getEmploymentLetterReport, getEmploymentLetterByIdReport, getCountriesReport } from 'src/printer/reports';
-import { Employess } from 'src/drizzle/schema/employees.schema';
+import { Employess, Countries } from 'src/drizzle/schema/schema';
 import { eq } from 'drizzle-orm';
 @Injectable()
 export class BasicReportsService {
@@ -41,8 +41,18 @@ export class BasicReportsService {
 
 		return doc;
 	}
-	getCountries() {
-		const docDefinition = getCountriesReport();
+	async getCountries() {
+		const countries = await this.db
+			.select({
+				id: Countries.id,
+				name: Countries.name,
+				phone: Countries.phone,
+				capital: Countries.capital,
+				currency: Countries.currency,
+				continent: Countries.continent,
+			})
+			.from(Countries);
+		const docDefinition = getCountriesReport({ countries });
 		const doc = this.printerService.createPdf(docDefinition);
 		return doc;
 	}
