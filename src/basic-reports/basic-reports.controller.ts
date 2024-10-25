@@ -27,4 +27,11 @@ export class BasicReportsController {
 		pdfDoc.pipe(res);
 		pdfDoc.end();
 	}
+	@Get('countries')
+	getCountries(@Res() res: Response) {
+		const pdfDoc = this.basicReportsService.getCountries();
+		res.setHeader('Content-Type', 'application/pdf');
+		pdfDoc.pipe(res);
+		pdfDoc.end();
+	}
 }

@@ -3,7 +3,7 @@ import { DRIZZLE } from 'src/drizzle/drizzle.module';
 import { DrizzleDB } from 'src/drizzle/types/types';
 import pdfPrinter from 'pdfmake';
 import { PrinterService } from 'src/printer/printer.service';
-import { getHelloWorldReport, getEmploymentLetterReport, getEmploymentLetterByIdReport } from 'src/printer/reports';
+import { getHelloWorldReport, getEmploymentLetterReport, getEmploymentLetterByIdReport, getCountriesReport } from 'src/printer/reports';
 import { Employess } from 'src/drizzle/schema/employees.schema';
 import { eq } from 'drizzle-orm';
 @Injectable()
@@ -39,6 +39,11 @@ export class BasicReportsService {
 		});
 		const doc = this.printerService.createPdf(docDefinition);
 
+		return doc;
+	}
+	getCountries() {
+		const docDefinition = getCountriesReport();
+		const doc = this.printerService.createPdf(docDefinition);
 		return doc;
 	}
 }
