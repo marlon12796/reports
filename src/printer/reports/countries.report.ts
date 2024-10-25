@@ -35,6 +35,31 @@ export const getCountriesReport = (countriesReport: CountriesReportTypes) => {
 					],
 				},
 			},
+			{
+				text: 'Totales',
+				margin: [0, 40, 0, 0],
+				fontSize: 18,
+				bold: true,
+			},
+			{
+				layout: 'noBorders',
+				marginTop: 5,
+				table: {
+					headerRows: 1,
+					widths: [100, 'auto'],
+					body: [
+						[
+							{
+								text: 'Total de Paises:',
+								bold: true,
+							},
+							{
+								text: `${countries.length} paises`,
+							},
+						],
+					],
+				},
+			},
 		],
 	};
 	return doc;
