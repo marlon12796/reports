@@ -10,8 +10,7 @@ const main = async () => {
 	try {
 		const [countries, employees] = await Promise.all([readCountriesCSV(csvCountriesPath), readCSV(csvFilePath)]);
 		await db.insert(schema.Countries).values(countries);
-		await db.insert(schema.Employess).values(employees);
-		// console.log(countries);
+		await db.insert(schema.Employees).values(employees);
 
 		console.log('inserted successfully');
 	} catch (error) {

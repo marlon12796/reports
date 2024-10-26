@@ -1,9 +1,74 @@
 {
-  "id": "d9569fa9-d4d4-4127-9138-22ba4e768755",
+  "id": "610e1abe-0611-45fd-8509-271e4b7bfa53",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.countries": {
+      "name": "countries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "countries_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "capital": {
+          "name": "capital",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "continent": {
+          "name": "continent",
+          "type": "continent_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "public.employees": {
       "name": "employees",
       "schema": "",
@@ -36,7 +101,7 @@
           "type": "position_enum",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "start_date": {
           "name": "start_date",
@@ -71,6 +136,18 @@
     }
   },
   "enums": {
+    "public.continent_enum": {
+      "name": "continent_enum",
+      "schema": "public",
+      "values": [
+        "Asia",
+        "Africa",
+        "Europe",
+        "North America",
+        "South America",
+        "Australia (Oceania)"
+      ]
+    },
     "public.position_enum": {
       "name": "position_enum",
       "schema": "public",

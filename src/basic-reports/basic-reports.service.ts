@@ -4,7 +4,7 @@ import { DrizzleDB } from 'src/drizzle/types/types';
 import pdfPrinter from 'pdfmake';
 import { PrinterService } from 'src/printer/printer.service';
 import { getHelloWorldReport, getEmploymentLetterReport, getEmploymentLetterByIdReport, getCountriesReport } from 'src/printer/reports';
-import { Employess, Countries } from 'src/drizzle/schema/schema';
+import { Employees, Countries } from 'src/drizzle/schema/schema';
 import { eq } from 'drizzle-orm';
 import { ContinentsQueryDto } from './dto/countries.dto';
 @Injectable()
@@ -25,7 +25,7 @@ export class BasicReportsService {
 		return doc;
 	}
 	async employmentLetterById(id: number) {
-		const employee = await this.db.select().from(Employess).where(eq(Employess.id, id));
+		const employee = await this.db.select().from(Employees).where(eq(Employees.id, id));
 		if (employee.length === 0) throw new NotFoundException(`Employee with ${employee[0].id} not found`);
 		const firstEmployee = employee[0];
 		const docDefinition = getEmploymentLetterByIdReport({
