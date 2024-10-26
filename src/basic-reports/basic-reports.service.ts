@@ -6,6 +6,7 @@ import { PrinterService } from 'src/printer/printer.service';
 import { getHelloWorldReport, getEmploymentLetterReport, getEmploymentLetterByIdReport, getCountriesReport } from 'src/printer/reports';
 import { Employess, Countries } from 'src/drizzle/schema/schema';
 import { eq } from 'drizzle-orm';
+import { ContinentsQueryDto } from './dto/countries.dto';
 @Injectable()
 export class BasicReportsService {
 	protected readonly pdfPrinterConfig: pdfPrinter;
@@ -41,7 +42,8 @@ export class BasicReportsService {
 
 		return doc;
 	}
-	async getCountries() {
+	async getCountries(countrieData: ContinentsQueryDto) {
+		const { continent } = countrieData;
 		const countries = await this.db
 			.select({
 				id: Countries.id,
@@ -51,7 +53,8 @@ export class BasicReportsService {
 				currency: Countries.currency,
 				continent: Countries.continent,
 			})
-			.from(Countries);
+			.from(Countries)
+			.where(continent ? eq(Countries.continent, continent) : undefined);
 		const docDefinition = getCountriesReport({ countries });
 		const doc = this.printerService.createPdf(docDefinition);
 		return doc;

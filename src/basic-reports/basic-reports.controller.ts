@@ -1,6 +1,7 @@
-import { Controller, Get, Param, ParseIntPipe, Res } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query, Res } from '@nestjs/common';
 import { BasicReportsService } from './basic-reports.service';
 import { Response } from 'express';
+import { ContinentsQueryDto } from './dto/countries.dto';
 
 @Controller('basic-reports')
 export class BasicReportsController {
@@ -28,8 +29,8 @@ export class BasicReportsController {
 		pdfDoc.end();
 	}
 	@Get('countries')
-	async getCountries(@Res() res: Response) {
-		const pdfDoc = await this.basicReportsService.getCountries();
+	async getCountries(@Res() res: Response, @Query() continentData: ContinentsQueryDto) {
+		const pdfDoc = await this.basicReportsService.getCountries(continentData);
 		res.setHeader('Content-Type', 'application/pdf');
 		pdfDoc.pipe(res);
 		pdfDoc.end();

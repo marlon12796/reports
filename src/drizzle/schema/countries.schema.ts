@@ -1,4 +1,4 @@
-import { InferModel, InferSelectModel } from 'drizzle-orm';
+import {  InferSelectModel } from 'drizzle-orm';
 import { integer, pgTable, varchar, text, smallint } from 'drizzle-orm/pg-core';
 import { pgEnum } from 'drizzle-orm/pg-core';
 
