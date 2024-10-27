@@ -1,7 +1,7 @@
-import { relations } from 'drizzle-orm';
+import { InferSelectModel, relations } from 'drizzle-orm';
 import { pgTable, varchar, serial } from 'drizzle-orm/pg-core';
-import { orders } from './orders.schema';
-export const customers = pgTable('customers', {
+import { Orders } from './schema';
+export const Customers = pgTable('customers', {
 	customerId: serial('customer_id').primaryKey().notNull(),
 	customerName: varchar('customer_name', { length: 255 }),
 	contactName: varchar('contact_name', { length: 255 }),
@@ -11,6 +11,7 @@ export const customers = pgTable('customers', {
 	country: varchar({ length: 255 }),
 });
 
-export const customersRelations = relations(customers, ({ many }) => ({
-	orders: many(orders),
+export const customersRelations = relations(Customers, ({ many }) => ({
+	orders: many(Orders),
 }));
+export type CustomerType = InferSelectModel<typeof Customers>;

@@ -1,8 +1,8 @@
 import { pgTable, integer, serial, foreignKey } from 'drizzle-orm/pg-core';
-import { orders } from './orders.schema';
-import { products } from './products.schema';
-import { relations } from 'drizzle-orm';
-export const orderDetails = pgTable(
+
+import { InferSelectModel, relations } from 'drizzle-orm';
+import { Orders, Products } from './schema';
+export const OrderDetails = pgTable(
 	'order_details',
 	{
 		orderDetailId: serial('order_detail_id').primaryKey().notNull(),
@@ -14,24 +14,25 @@ export const orderDetails = pgTable(
 		return {
 			orderDetailsOrderIdFkey: foreignKey({
 				columns: [table.orderId],
-				foreignColumns: [orders.orderId],
+				foreignColumns: [Orders.orderId],
 				name: 'order_details_order_id_fkey',
 			}),
 			orderDetailsProductIdFkey: foreignKey({
 				columns: [table.productId],
-				foreignColumns: [products.productId],
+				foreignColumns: [Products.productId],
 				name: 'order_details_product_id_fkey',
 			}),
 		};
 	},
 );
-export const orderDetailsRelations = relations(orderDetails, ({ one }) => ({
-	order: one(orders, {
-		fields: [orderDetails.orderId],
-		references: [orders.orderId],
+export const orderDetailsRelations = relations(OrderDetails, ({ one }) => ({
+	order: one(Orders, {
+		fields: [OrderDetails.orderId],
+		references: [Orders.orderId],
 	}),
-	product: one(products, {
-		fields: [orderDetails.productId],
-		references: [products.productId],
+	product: one(Products, {
+		fields: [OrderDetails.productId],
+		references: [Products.productId],
 	}),
 }));
+export type OrderDetailsType = InferSelectModel<typeof OrderDetails>;

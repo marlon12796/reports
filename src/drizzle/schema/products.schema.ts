@@ -1,9 +1,9 @@
 import { pgTable, integer, varchar, serial, foreignKey, numeric } from 'drizzle-orm/pg-core';
 import { categories } from './categories.schema';
-import { relations } from 'drizzle-orm';
-import { orderDetails } from './orderDetails.schema';
+import { InferSelectModel, relations } from 'drizzle-orm';
+import { OrderDetails } from './orderDetails.schema';
 
-export const products = pgTable(
+export const Products = pgTable(
 	'products',
 	{
 		productId: serial('product_id').primaryKey().notNull(),
@@ -22,10 +22,11 @@ export const products = pgTable(
 		};
 	},
 );
-export const productsRelations = relations(products, ({ one, many }) => ({
+export const productsRelations = relations(Products, ({ one, many }) => ({
 	category: one(categories, {
-		fields: [products.categoryId],
+		fields: [Products.categoryId],
 		references: [categories.categoryId],
 	}),
-	orderDetails: many(orderDetails),
+	orderDetails: many(OrderDetails),
 }));
+export type ProductType = InferSelectModel<typeof Products>;

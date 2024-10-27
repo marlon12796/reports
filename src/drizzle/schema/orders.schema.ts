@@ -1,9 +1,9 @@
 import { pgTable, integer, date, serial, foreignKey } from 'drizzle-orm/pg-core';
-import { customers } from './customers.schema';
-import { relations } from 'drizzle-orm';
-import { orderDetails } from './orderDetails.schema';
+import { Customers } from './customers.schema';
+import { InferSelectModel, relations } from 'drizzle-orm';
+import { OrderDetails } from './orderDetails.schema';
 
-export const orders = pgTable(
+export const Orders = pgTable(
 	'orders',
 	{
 		orderId: serial('order_id').primaryKey().notNull(),
@@ -14,17 +14,18 @@ export const orders = pgTable(
 		return {
 			ordersCustomerIdFkey: foreignKey({
 				columns: [table.customerId],
-				foreignColumns: [customers.customerId],
+				foreignColumns: [Customers.customerId],
 				name: 'orders_customer_id_fkey',
 			}),
 		};
 	},
 );
 
-export const ordersRelations = relations(orders, ({ one, many }) => ({
-	customer: one(customers, {
-		fields: [orders.customerId],
-		references: [customers.customerId],
+export const ordersRelations = relations(Orders, ({ one, many }) => ({
+	customer: one(Customers, {
+		fields: [Orders.customerId],
+		references: [Customers.customerId],
 	}),
-	orderDetails: many(orderDetails),
+	orderDetails: many(OrderDetails),
 }));
+export type OrderType = InferSelectModel<typeof Orders>;
