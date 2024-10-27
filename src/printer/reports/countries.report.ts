@@ -14,7 +14,7 @@ export const getCountriesReport = (countriesReport: CountriesReportTypes) => {
 	const doc: TDocumentDefinitions = {
 		pageOrientation: 'landscape',
 		header: headerSection({ title, subtitle }),
-		footer: (currentPage, pageCount, pageSize) => footerSection(currentPage, pageCount, pageSize),
+		footer: (currentPage, pageCount, pageSize) => footerSection({ currentPage, pageCount, pageSize, margin: [0, 10, 40, 0] }),
 		pageMargins: [40, 120],
 		content: [
 			{

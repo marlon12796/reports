@@ -2,12 +2,6 @@ import path from 'node:path';
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { DateFormatter } from 'src/common/helpers/date-formatter';
 
-const logo: Content = {
-	image: path.join(process.cwd(), 'src/assets/tucan-code-logo.png'),
-	width: 100,
-	height: 100,
-	margin: [0, 0],
-};
 interface HeaderOptions {
 	showLogo?: boolean;
 	showDate?: boolean;
@@ -16,6 +10,13 @@ interface HeaderOptions {
 }
 export const headerSection = (headerOptions: HeaderOptions) => {
 	const { title = false, showDate = true, showLogo = true, subtitle } = headerOptions;
+
+	const logo: Content = {
+		image: path.join(process.cwd(), 'src/assets/tucan-code-logo.png'),
+		width: 100,
+		height: 100,
+		margin: [0, 0],
+	};
 	const headerLogo = showLogo ? [logo] : [];
 	const headerDate: Content = showDate
 		? [
