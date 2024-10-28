@@ -4,7 +4,7 @@ import { DRIZZLE } from 'src/drizzle/drizzle.module';
 import { Orders } from 'src/drizzle/schema/schema';
 import { DrizzleDB } from 'src/drizzle/types/types';
 import { PrinterService } from 'src/printer/printer.service';
-import { getHelloWorldReport, storeOrderByIdReport } from 'src/printer/reports';
+import { basicReportChart, storeOrderByIdReport } from 'src/printer/reports';
 
 @Injectable()
 export class StoreReportsService {
@@ -41,5 +41,10 @@ export class StoreReportsService {
 		const pdfDoc = this.printerService.createPdf(docDefinition);
 
 		return pdfDoc;
+	}
+	async getSVGCharts() {
+		const docDefinition = await basicReportChart();
+		const doc = this.printerService.createPdf(docDefinition);
+		return doc;
 	}
 }

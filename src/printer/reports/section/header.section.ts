@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
-import { DateFormatter } from 'src/common/helpers/date-formatter';
+import { DateFormatter } from 'src/common/utils/date-formatter';
 
 interface HeaderOptions {
 	showLogo?: boolean;
