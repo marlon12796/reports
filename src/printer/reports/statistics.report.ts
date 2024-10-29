@@ -1,7 +1,7 @@
 import { type TDocumentDefinitions } from 'pdfmake/interfaces';
 import { generateStatisticsReport } from 'src/store-reports/charts/donut.chart';
-import { chartJsToImage } from 'src/store-reports/helper/chart-generate';
 import { headerSection } from './section/header.section';
+import { generateLineChart, generateBarChart, generatePieChart } from 'src/store-reports/charts';
 interface TopCountry {
 	country: string;
 	total: number;
@@ -24,7 +24,12 @@ const generateTopCountryDonuts = async (topCountries: TopCountry[]) => {
 	return donutChart;
 };
 export const getStatisticsReport = async (options: StatisticsReportTypes): Promise<TDocumentDefinitions> => {
-	const donutChart = await generateTopCountryDonuts(options.topCountries);
+	const [donutChart, lineChart, barChart, pieChart] = await Promise.all([
+		generateTopCountryDonuts(options.topCountries),
+		generateLineChart({}),
+		generateBarChart({}),
+		generatePieChart({}),
+	]);
 	const doc: TDocumentDefinitions = {
 		header: headerSection({
 			title: options.title ?? 'Estadísticas',
@@ -32,7 +37,7 @@ export const getStatisticsReport = async (options: StatisticsReportTypes): Promi
 			sizeSubtitle: 13,
 			subtitle: options.subtitle ?? 'Gráficos Estadísticos de La Tienda',
 		}),
-		pageMargins: [40, 80, 40, 80],
+		pageMargins: [40, 80, 40, 40],
 		content: [
 			{
 				marginTop: 30,
@@ -54,6 +59,27 @@ export const getStatisticsReport = async (options: StatisticsReportTypes): Promi
 							widths: [100, 'auto'],
 							body: [['País', 'Clientes'], ...options.topCountries.map((entry) => [entry.country, entry.total])],
 						},
+					},
+				],
+			},
+			{
+				image: lineChart,
+				width: 470,
+				height: 250,
+				marginTop: 20,
+				alignment: 'center',
+			},
+			{
+				marginTop: 20,
+				columnGap: 10,
+				columns: [
+					{
+						image: barChart,
+						width: 250,
+					},
+					{
+						image: pieChart,
+						width: 250,
 					},
 				],
 			},
