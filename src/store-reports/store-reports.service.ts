@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { count, desc, eq, sql } from 'drizzle-orm';
 import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { Orders } from 'src/drizzle/schema/schema';
+import { Customers, Orders } from 'src/drizzle/schema/schema';
 import { DrizzleDB } from 'src/drizzle/types/types';
 import { PrinterService } from 'src/printer/printer.service';
-import { basicReportChart, storeOrderByIdReport } from 'src/printer/reports';
+import { basicReportChart, storeOrderByIdReport, getStatisticsReport } from 'src/printer/reports';
 
 @Injectable()
 export class StoreReportsService {
@@ -45,6 +45,20 @@ export class StoreReportsService {
 	async getSVGCharts() {
 		const docDefinition = await basicReportChart();
 		const doc = this.printerService.createPdf(docDefinition);
+		return doc;
+	}
+	async getStatistics() {
+		const topCountries = await this.db
+			.select({
+				country: Customers.country,
+				total: count(Customers.customerId).as('total'),
+			})
+			.from(Customers)
+			.groupBy(Customers.country)
+			.orderBy(sql`total desc`)
+			.limit(10);
+		const statisticsReport = await getStatisticsReport({ topCountries });
+		const doc = this.printerService.createPdf(statisticsReport);
 		return doc;
 	}
 }

@@ -7,9 +7,11 @@ interface HeaderOptions {
 	showDate?: boolean;
 	title?: string;
 	subtitle?: string;
+	sizeTitle?: number;
+	sizeSubtitle?: number;
 }
 export const headerSection = (headerOptions: HeaderOptions) => {
-	const { title = false, showDate = true, showLogo = true, subtitle } = headerOptions;
+	const { title = false, showDate = true, showLogo = true, subtitle, sizeTitle = 21, sizeSubtitle = 17 } = headerOptions;
 
 	const logo: Content = {
 		image: path.join(process.cwd(), 'src/assets/tucan-code-logo.png'),
@@ -23,8 +25,9 @@ export const headerSection = (headerOptions: HeaderOptions) => {
 				{
 					text: `${DateFormatter.getDDMMYYYY(new Date())}`,
 					alignment: 'right',
-					margin: [20, 30],
-					width: 150,
+					margin: [20, 45],
+					width: 100,
+					fontSize: 10,
 				},
 			]
 		: [];
@@ -33,8 +36,8 @@ export const headerSection = (headerOptions: HeaderOptions) => {
 				{
 					stack: [
 						{ text: '', margin: [0, 15] },
-						{ text: title, style: { bold: true, alignment: 'center', fontSize: 22 } },
-						{ text: subtitle, alignment: 'center', fontSize: 14 },
+						{ text: title, style: { bold: true, alignment: 'center', fontSize: sizeTitle } },
+						{ text: subtitle, alignment: 'center', fontSize: sizeSubtitle },
 					],
 				},
 			]
@@ -47,6 +50,7 @@ export const headerSection = (headerOptions: HeaderOptions) => {
 
 			body: [[...headerLogo, ...isStackContent, ...headerDate]],
 		},
+		alignment: 'center',
 	};
 	return header;
 };
