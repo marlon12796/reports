@@ -1,5 +1,5 @@
 import type { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { headerCommunity, clientTableCommunity } from './community';
+import { headerCommunity, clientTableCommunity, createRowIva } from './community';
 
 export const getCommunityReport = () => {
 	const docDefinition: TDocumentDefinitions = {
@@ -22,12 +22,12 @@ export const getCommunityReport = () => {
 				layout: 'finalReport',
 				headerData: { text: 'DATOS DEL CLIENTE', fillColor: '#445E93', color: '#ffffff', colSpan: 4 },
 				clientData: [
-					['Nombre Proyecto', ''],
-					['Contacto', ''],
+					['Razón Social', ''],
 					['Dirección', ''],
-					['Email', ''],
-					['Ciudad', ''],
+					['Rut', ''],
 					['Teléfono', ''],
+					['Giro', ''],
+					['Condición de Pago', ''],
 				],
 			}),
 			clientTableCommunity({
@@ -112,104 +112,11 @@ export const getCommunityReport = () => {
 				layout: 'mainIvaReport',
 				table: {
 					widths: [50, 50, 50, '*', 100, 50, 50],
-
 					body: [
-						[
-							{ text: '', margin: [0, 10] },
-							{ text: '5', margin: [0, 25], rowSpan: 2, fontSize: 12 },
-							{ text: '', margin: [0, 10] },
-							{ text: 'PUERTA INTERIOR', alignment: 'start', bold: true, margin: [10, 10] },
-							{
-								margin: 0,
-								table: {
-									widths: ['*', '*', '*', '*', '*'],
-									body: [
-										[
-											{ text: '45', marginTop: 10 },
-											{ text: '50', marginTop: 10 },
-											{ text: '75', marginTop: 10 },
-											{ text: '50', marginTop: 10 },
-											{ text: '25', marginTop: 10 },
-										],
-									],
-								},
-								layout: 'noBorders',
-							},
-							{ text: '', alignment: 'center', margin: [0, 10] },
-							{ text: '', alignment: 'center', margin: [0, 10] },
-						],
-						[
-							{ text: '', margin: [0, 10] },
-							{ text: '' },
-							{ text: '', margin: [0, 10] },
-							{ text: 'PUERTA INTERIOR', alignment: 'start', bold: true, margin: [10, 10] },
-							{
-								margin: 0,
-								table: {
-									widths: ['*', '*', '*', '*', '*'],
-									body: [
-										[
-											{ text: '45', marginTop: 10 },
-											{ text: '50', marginTop: 10 },
-											{ text: '75', marginTop: 10 },
-											{ text: '50', marginTop: 10 },
-											{ text: '25', marginTop: 10 },
-										],
-									],
-								},
-								layout: 'noBorders',
-							},
-							{ text: '', alignment: 'center', margin: [0, 10] },
-							{ text: '', alignment: 'center', margin: [0, 10] },
-						],
-						[
-							{ text: '', margin: [0, 10] },
-							{ text: '10', margin: [0, 25], rowSpan: 2, fontSize: 12 },
-							{ text: '', margin: [0, 10] },
-							{ text: 'PUERTA INTERIOR', alignment: 'start', bold: true, margin: [10, 10] },
-							{
-								margin: 0,
-								table: {
-									widths: ['*', '*', '*', '*', '*'],
-									body: [
-										[
-											{ text: '45', marginTop: 10 },
-											{ text: '50', marginTop: 10 },
-											{ text: '75', marginTop: 10 },
-											{ text: '50', marginTop: 10 },
-											{ text: '25', marginTop: 10 },
-										],
-									],
-								},
-								layout: 'noBorders',
-							},
-							{ text: '', alignment: 'center', margin: [0, 10] },
-							{ text: '', alignment: 'center', margin: [0, 10] },
-						],
-						[
-							{ text: '', margin: [0, 10] },
-							{ text: '' },
-							{ text: '', margin: [0, 10] },
-							{ text: 'PUERTA INTERIOR', alignment: 'start', bold: true, margin: [10, 10] },
-							{
-								margin: 0,
-								table: {
-									widths: ['*', '*', '*', '*', '*'],
-									body: [
-										[
-											{ text: '45', marginTop: 10 },
-											{ text: '50', marginTop: 10 },
-											{ text: '75', marginTop: 10 },
-											{ text: '50', marginTop: 10 },
-											{ text: '25', marginTop: 10 },
-										],
-									],
-								},
-								layout: 'noBorders',
-							},
-							{ text: '', margin: [0, 10] },
-							{ text: '', margin: [0, 10] },
-						],
+						createRowIva({ content: ['0', '5', '', 'Puerta Interior', ['45', '50', '75', '32', '35'], '', ''], index: 0 }),
+						createRowIva({ content: ['', '', '', 'Puerta Superior', ['45', '14', '50', '12', '15'], '', ''], index: 1 }),
+						createRowIva({ content: ['', '10', '', 'Puerta Del lado', ['5', '140', '5', '22', '75'], '', ''], index: 2 }),
+						createRowIva({ content: ['', '', '', 'Puerta Del Costado', ['', '10', '', '22', '50'], '', ''], index: 3 }),
 						[
 							{ text: '', border: [false] },
 							{ text: 'TOTAL', margin: [0, 10], bold: true },
@@ -222,7 +129,6 @@ export const getCommunityReport = () => {
 					],
 				},
 			},
-			// Fila de Totales
 		],
 	};
 	return docDefinition;

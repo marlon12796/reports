@@ -1,4 +1,4 @@
-import { Content, Table, TableCell, type TDocumentDefinitions } from 'pdfmake/interfaces';
+import { type TDocumentDefinitions } from 'pdfmake/interfaces';
 interface TableCommunityTypes {
 	layout: string;
 	clientData: [string, string | number][];
