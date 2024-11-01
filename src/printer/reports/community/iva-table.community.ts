@@ -29,3 +29,26 @@ export const createRowIva = (rowData: IvaProps) => {
 	});
 	return data;
 };
+export const createTableRowDownIva = (title: string, amount: string) => {
+	const content: TDocumentDefinitions['content'] = {
+		marginTop: 10,
+		fontSize: 8,
+		bold: true,
+		alignment: 'center',
+		table: {
+			widths: [50, 50, 50, '*', 100, 50, 50],
+			body: [
+				[
+					{ text: '', border: [false] },
+					{ text: '', border: [false] },
+					{ text: '', border: [false] },
+					{ text: '', border: [false] },
+					{ text: '', border: [false] },
+					{ text: title, fillColor: '#445E93', color: 'white', borderColor: 'black', margin: [5, 5], fontSize: 9 },
+					{ text: amount, fillColor: 'black', color: 'white', borderColor: 'black', margin: [5, 5], fontSize: 9 },
+				],
+			],
+		},
+	};
+	return content;
+};

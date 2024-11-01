@@ -1,5 +1,5 @@
 import type { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { headerCommunity, clientTableCommunity, createRowIva } from './community';
+import { headerCommunity, clientTableCommunity, createRowIva, createTableRowDownIva } from './community';
 
 export const getCommunityReport = () => {
 	const docDefinition: TDocumentDefinitions = {
@@ -129,6 +129,9 @@ export const getCommunityReport = () => {
 					],
 				},
 			},
+			createTableRowDownIva('Sub-Total', '$250.00'),
+			createTableRowDownIva('Igv', '$45.00'),
+			createTableRowDownIva('Total', '$279.59'),
 		],
 	};
 	return docDefinition;

@@ -90,5 +90,6 @@ export const customLayoutReport: Record<string, CustomTableLayout> = {
 		hLineWidth: (i, node: ContentTable) => {
 			return i % 2 === 0 || i === node.table.body.length ? 2 : 1;
 		},
+		
 	},
 };
